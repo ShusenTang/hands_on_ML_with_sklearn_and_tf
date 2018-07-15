@@ -11,6 +11,9 @@ oecd_bli = pd.read_csv("oecd_bli_2015.csv", thousands=',')
 gdp_per_capita = pd.read_csv("gdp_per_capita.csv", thousands=',', delimiter='\t',
     encoding='latin1', na_values="n/a")
 
+# print(oecd_bli.head())
+# print(gdp_per_capita.head())
+
 
 def prepare_country_stats(oecd_bli, gdp_per_capita):
     oecd_bli = oecd_bli[oecd_bli["INEQUALITY"]=="TOT"]
@@ -26,15 +29,16 @@ def prepare_country_stats(oecd_bli, gdp_per_capita):
 
 # 准备数据
 country_stats = prepare_country_stats(oecd_bli, gdp_per_capita)
+print(country_stats.head())
 X = np.c_[country_stats["GDP per capita"]]
 y = np.c_[country_stats["Life satisfaction"]]
+print(type(X))
 
 # 可视化数据
 country_stats.plot(kind='scatter', x="GDP per capita", y='Life satisfaction')
 plt.show()
 
 # 选择线性模型
-# lin_reg_model = sklearn.linear_model.LinearRegression()
 lin_reg_model = sklearn.linear_model.LinearRegression()
 
 # 训练模型
